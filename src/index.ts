@@ -3,7 +3,7 @@
 import OpenAI from 'openai';
 import z from "zod";
 
-const VERSION = "0.0.1";
+const VERSION = "0.0.2";
 
 const apiKeySchema = z.string().min(1);
 const API_KEY = apiKeySchema.parse(process.env.OPENAI_API_KEY);
