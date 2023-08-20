@@ -1,5 +1,5 @@
 {
-  "name": "yarn-v3-template",
+  "name": "mohaya",
   "version": "0.0.2",
   "scripts": {
     "build": "rm -rf dist && node ./bin/build.mjs",
