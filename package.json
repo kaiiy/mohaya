@@ -7,7 +7,6 @@
     "place": "cp -f ./dist/mohaya $HOME/.local/bin/ && chmod u+x $HOME/.local/bin/mohaya"
   },
   "packageManager": "yarn@3.6.1",
-  "type": "module",
   "devDependencies": {
     "@tsconfig/recommended": "^1.0.2",
     "@types/node": "^20.5.1",

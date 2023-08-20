@@ -20,10 +20,12 @@ const main = async () => {
     const stream = await openai.chat.completions.create({
         model: 'gpt-3.5-turbo',
         messages: [{
-            role: "assistant", content: "First translates the user's input into English, then executes the contents of the prompt in English, and finally translates the output back into Japanese.",
+            role: "system", content: "You are a programming and system administration assistant, Mohaya.",
         }, {
             role: 'user', content: process.argv.slice(2).join(" ")
-        }],
+        }, {
+            role: "user", content: "If the input message is in Japanese, translate it into English first. Then, reply in English only. Do not reply in Japanese. When using code blocks, always specify the programming language."
+        },],
         stream: true,
     });
     for await (const part of stream) {
