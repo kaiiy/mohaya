@@ -1,0 +1,30 @@
+{
+  "name": "yarn-v3-template",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "rm -rf dist && node ./bin/build.mjs",
+    "ts": "node -r esbuild-register",
+    "place": "cp -f ./dist/mohaya $HOME/.local/bin/ && chmod u+x $HOME/.local/bin/mohaya"
+  },
+  "packageManager": "yarn@3.6.1",
+  "type": "module",
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.2",
+    "@types/node": "^20.5.1",
+    "console-log-colors": "^0.4.0",
+    "esbuild": "^0.19.2",
+    "esbuild-register": "^3.4.2",
+    "log-symbols": "^5.1.0",
+    "pretty-bytes": "^6.1.1",
+    "typescript": "^5.1.6"
+  },
+  "volta": {
+    "node": "20.5.1",
+    "yarn": "3.6.2"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "openai": "^4.0.1",
+    "zod": "^3.22.2"
+  }
+}
