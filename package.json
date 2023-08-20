@@ -1,6 +1,6 @@
 {
   "name": "yarn-v3-template",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "build": "rm -rf dist && node ./bin/build.mjs",
     "ts": "node -r esbuild-register",
