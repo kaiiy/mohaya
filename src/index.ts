@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-import OpenAI from 'openai';
+import { OpenAI } from 'openai';
 import { string } from "valibot"
 
-const VERSION = "0.0.2";
+const VERSION = "0.0.3";
 
 const apiKeySchema = string()
 const API_KEY = apiKeySchema.parse(process.env.OPENAI_API_KEY);
@@ -21,11 +21,12 @@ const main = async () => {
         model: 'gpt-3.5-turbo',
         messages: [{
             role: "system", content: "You are a programming and system administration assistant, Mohaya.",
+        },
+        {
+            role: "user", content: "Remember this: If the input message is in Japanese, translate it into English first. Then, reply in English only. Do not reply in Japanese. When using code blocks, always specify the programming language."
         }, {
             role: 'user', content: process.argv.slice(2).join(" ")
-        }, {
-            role: "user", content: "If the input message is in Japanese, translate it into English first. Then, reply in English only. Do not reply in Japanese. When using code blocks, always specify the programming language."
-        },],
+        }],
         stream: true,
     });
     for await (const part of stream) {
