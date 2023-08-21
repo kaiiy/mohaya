@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
 import OpenAI from 'openai';
-import z from "zod";
+import { string } from "valibot"
 
 const VERSION = "0.0.2";
 
-const apiKeySchema = z.string().min(1);
+const apiKeySchema = string()
 const API_KEY = apiKeySchema.parse(process.env.OPENAI_API_KEY);
 
 const openai = new OpenAI({ apiKey: API_KEY, });

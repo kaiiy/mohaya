@@ -288,13 +288,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv@npm:^16.3.1":
-  version: 16.3.1
-  resolution: "dotenv@npm:16.3.1"
-  checksum: 15d75e7279018f4bafd0ee9706593dd14455ddb71b3bcba9c52574460b7ccaf67d5cf8b2c08a5af1a9da6db36c956a04a1192b101ee102a3e0cf8817bbcf3dfd
-  languageName: node
-  linkType: hard
-
 "esbuild-register@npm:^3.4.2":
   version: 3.4.2
   resolution: "esbuild-register@npm:3.4.2"
@@ -485,14 +478,13 @@ __metadata:
     "@tsconfig/recommended": ^1.0.2
     "@types/node": ^20.5.1
     console-log-colors: ^0.4.0
-    dotenv: ^16.3.1
     esbuild: ^0.19.2
     esbuild-register: ^3.4.2
     log-symbols: ^5.1.0
     openai: ^4.0.1
     pretty-bytes: ^6.1.1
     typescript: ^5.1.6
-    zod: ^3.22.2
+    valibot: ^0.12.0
   languageName: unknown
   linkType: soft
 
@@ -583,6 +575,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"valibot@npm:^0.12.0":
+  version: 0.12.0
+  resolution: "valibot@npm:0.12.0"
+  checksum: 1ec982de04dd352783d50061c26cfdf9a9c95762a0c85f6318871c08cdd0290d3cf1f0f5950f5870fa60d3d5d9fcb960b9a15882f1f1f80cfa1b3b5b9c896edb
+  languageName: node
+  linkType: hard
+
 "web-streams-polyfill@npm:4.0.0-beta.3":
   version: 4.0.0-beta.3
   resolution: "web-streams-polyfill@npm:4.0.0-beta.3"
@@ -604,12 +603,5 @@ __metadata:
     tr46: ~0.0.3
     webidl-conversions: ^3.0.0
   checksum: b8daed4ad3356cc4899048a15b2c143a9aed0dfae1f611ebd55073310c7b910f522ad75d727346ad64203d7e6c79ef25eafd465f4d12775ca44b90fa82ed9e2c
-  languageName: node
-  linkType: hard
-
-"zod@npm:^3.22.2":
-  version: 3.22.2
-  resolution: "zod@npm:3.22.2"
-  checksum: 231e2180c8eabb56e88680d80baff5cf6cbe6d64df3c44c50ebe52f73081ecd0229b1c7215b9552537f537a36d9e36afac2737ddd86dc14e3519bdbc777e82b9
   languageName: node
   linkType: hard

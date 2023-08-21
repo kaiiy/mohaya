@@ -2,11 +2,15 @@
   "name": "mohaya",
   "version": "0.0.2",
   "scripts": {
-    "build": "rm -rf dist && yarn ts ./bin/build.ts",
     "ts": "node -r esbuild-register",
+    "build": "rm -rf dist && yarn ts ./bin/build.ts",
     "place": "cp -f ./dist/mohaya $HOME/.local/bin/ && chmod u+x $HOME/.local/bin/mohaya"
   },
   "packageManager": "yarn@3.6.1",
+  "dependencies": {
+    "openai": "^4.0.1",
+    "valibot": "^0.12.0"
+  },
   "devDependencies": {
     "@tsconfig/recommended": "^1.0.2",
     "@types/node": "^20.5.1",
@@ -20,10 +24,5 @@
   "volta": {
     "node": "20.5.1",
     "yarn": "3.6.2"
-  },
-  "dependencies": {
-    "dotenv": "^16.3.1",
-    "openai": "^4.0.1",
-    "zod": "^3.22.2"
   }
 }
