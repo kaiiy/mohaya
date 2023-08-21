@@ -2,7 +2,7 @@
   "name": "mohaya",
   "version": "0.0.2",
   "scripts": {
-    "build": "rm -rf dist && node ./bin/build.mjs",
+    "build": "rm -rf dist && yarn ts ./bin/build.ts",
     "ts": "node -r esbuild-register",
     "place": "cp -f ./dist/mohaya $HOME/.local/bin/ && chmod u+x $HOME/.local/bin/mohaya"
   },

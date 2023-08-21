@@ -478,6 +478,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mohaya@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "mohaya@workspace:."
+  dependencies:
+    "@tsconfig/recommended": ^1.0.2
+    "@types/node": ^20.5.1
+    console-log-colors: ^0.4.0
+    dotenv: ^16.3.1
+    esbuild: ^0.19.2
+    esbuild-register: ^3.4.2
+    log-symbols: ^5.1.0
+    openai: ^4.0.1
+    pretty-bytes: ^6.1.1
+    typescript: ^5.1.6
+    zod: ^3.22.2
+  languageName: unknown
+  linkType: soft
+
 "ms@npm:2.1.2":
   version: 2.1.2
   resolution: "ms@npm:2.1.2"
@@ -588,24 +606,6 @@ __metadata:
   checksum: b8daed4ad3356cc4899048a15b2c143a9aed0dfae1f611ebd55073310c7b910f522ad75d727346ad64203d7e6c79ef25eafd465f4d12775ca44b90fa82ed9e2c
   languageName: node
   linkType: hard
-
-"yarn-v3-template@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "yarn-v3-template@workspace:."
-  dependencies:
-    "@tsconfig/recommended": ^1.0.2
-    "@types/node": ^20.5.1
-    console-log-colors: ^0.4.0
-    dotenv: ^16.3.1
-    esbuild: ^0.19.2
-    esbuild-register: ^3.4.2
-    log-symbols: ^5.1.0
-    openai: ^4.0.1
-    pretty-bytes: ^6.1.1
-    typescript: ^5.1.6
-    zod: ^3.22.2
-  languageName: unknown
-  linkType: soft
 
 "zod@npm:^3.22.2":
   version: 3.22.2
