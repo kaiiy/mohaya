@@ -10,7 +10,11 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v3
-      - uses: volta-cli/action@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: yarn
+
       - run: yarn install
       - run: yarn build
       - uses: softprops/action-gh-release@v1
