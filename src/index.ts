@@ -4,7 +4,7 @@ import { OpenAI } from 'openai';
 import { exit } from 'process';
 import { string, safeParse } from "valibot"
 
-const VERSION = "0.0.3";
+const VERSION = "0.0.4";
 
 const apiKeySchema = string()
 const apiKeyResult = safeParse(apiKeySchema, process.env.OPENAI_API_KEY)
