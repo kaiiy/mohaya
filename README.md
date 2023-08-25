@@ -16,6 +16,5 @@ $ mohaya what is your name
 
 ```sh
 $ set -Ux OPENAI_API_KEY [your api key]
-$ yarn 
-$ yarn place
+$ curl https://github.com/kaiiy/mohaya/releases/latest/download/get.sh | bash
 ```
