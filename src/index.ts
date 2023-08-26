@@ -1,14 +1,20 @@
 #!/usr/bin/env node
 
 import { OpenAI } from 'openai';
-import { string } from "valibot"
+import { exit } from 'process';
+import { string, safeParse } from "valibot"
 
-const VERSION = "0.0.3";
+const VERSION = "0.0.4";
 
 const apiKeySchema = string()
-const API_KEY = apiKeySchema.parse(process.env.OPENAI_API_KEY);
+const apiKeyResult = safeParse(apiKeySchema, process.env.OPENAI_API_KEY)
 
-const openai = new OpenAI({ apiKey: API_KEY, });
+if (!apiKeyResult.success) {
+    console.error("Error: OPENAI_API_KEY is not set.")
+    exit(1)
+}
+
+const openai = new OpenAI({ apiKey: apiKeyResult.data, });
 
 const main = async () => {
     if (process.argv.length < 3) {

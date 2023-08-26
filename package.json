@@ -4,7 +4,7 @@
   "scripts": {
     "ts": "node -r esbuild-register",
     "build": "rm -rf dist && yarn ts ./bin/build.ts",
-    "place": "cp -f ./dist/mohaya $HOME/.local/bin/ && chmod u+x $HOME/.local/bin/mohaya"
+    "place": "yarn build && cp -f ./dist/mohaya $HOME/.local/bin/ && chmod u+x $HOME/.local/bin/mohaya"
   },
   "packageManager": "yarn@3.6.1",
   "dependencies": {
