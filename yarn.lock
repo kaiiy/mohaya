@@ -176,7 +176,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^20.5.1":
+"@types/node@npm:*":
   version: 20.5.1
   resolution: "@types/node@npm:20.5.1"
   checksum: 3dbe611cd67afa987102c8558ee70f848949c5dcfee5f60abc073e55c0d7b048e391bf06bb1e0dc052cb7210ca97136ac496cbaf6e89123c989de6bd125fde82
@@ -187,6 +187,13 @@ __metadata:
   version: 18.17.6
   resolution: "@types/node@npm:18.17.6"
   checksum: 70bc92adde47d569f25c5ed40b55040cdf189518d6149e0c3041c6e60b1098cad9c48a856f0b7868ebd74d4098a0ca508b0ec4373dd96216eb8a387ee898e14c
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^20.5.6":
+  version: 20.5.6
+  resolution: "@types/node@npm:20.5.6"
+  checksum: d2ce44f1cfa3fd00fe7426f7cf9a46d680cd57802b874ed5618e7d9101a9c6b8de37f08c0e7185ee06fb363ad492549c3ea69665c7e8e31c7813210ed8e89005
   languageName: node
   linkType: hard
 
@@ -476,15 +483,15 @@ __metadata:
   resolution: "mohaya@workspace:."
   dependencies:
     "@tsconfig/recommended": ^1.0.2
-    "@types/node": ^20.5.1
+    "@types/node": ^20.5.6
     console-log-colors: ^0.4.0
     esbuild: ^0.19.2
     esbuild-register: ^3.4.2
     log-symbols: ^5.1.0
-    openai: ^4.0.1
+    openai: ^4.2.0
     pretty-bytes: ^6.1.1
-    typescript: ^5.1.6
-    valibot: ^0.12.0
+    typescript: ^5.2.2
+    valibot: ^0.13.1
   languageName: unknown
   linkType: soft
 
@@ -523,9 +530,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"openai@npm:^4.0.1":
-  version: 4.0.1
-  resolution: "openai@npm:4.0.1"
+"openai@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "openai@npm:4.2.0"
   dependencies:
     "@types/node": ^18.11.18
     "@types/node-fetch": ^2.6.4
@@ -537,7 +544,7 @@ __metadata:
     node-fetch: ^2.6.7
   bin:
     openai: bin/cli
-  checksum: e6fe05e6c734b5245e524baffb49804e20d3b57186b2f9dbdbd75fe3119a5b303953f046e26079bcf0f2b4b22c63e1941b181e9af8d566cd06889d0d4035ffb8
+  checksum: c2b28e422d7ea6a38a2d98d1c9c933819386d560e473ebcf4417d0cbd80a79f05392120ae32da8b8250732b62469a08270b9b4864e9ff2965aa1af897b986867
   languageName: node
   linkType: hard
 
@@ -555,30 +562,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.1.6":
-  version: 5.1.6
-  resolution: "typescript@npm:5.1.6"
+"typescript@npm:^5.2.2":
+  version: 5.2.2
+  resolution: "typescript@npm:5.2.2"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: b2f2c35096035fe1f5facd1e38922ccb8558996331405eb00a5111cc948b2e733163cc22fab5db46992aba7dd520fff637f2c1df4996ff0e134e77d3249a7350
+  checksum: 7912821dac4d962d315c36800fe387cdc0a6298dba7ec171b350b4a6e988b51d7b8f051317786db1094bd7431d526b648aba7da8236607febb26cf5b871d2d3c
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^5.1.6#~builtin<compat/typescript>":
-  version: 5.1.6
-  resolution: "typescript@patch:typescript@npm%3A5.1.6#~builtin<compat/typescript>::version=5.1.6&hash=5da071"
+"typescript@patch:typescript@^5.2.2#~builtin<compat/typescript>":
+  version: 5.2.2
+  resolution: "typescript@patch:typescript@npm%3A5.2.2#~builtin<compat/typescript>::version=5.2.2&hash=f3b441"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: f53bfe97f7c8b2b6d23cf572750d4e7d1e0c5fff1c36d859d0ec84556a827b8785077bc27676bf7e71fae538e517c3ecc0f37e7f593be913d884805d931bc8be
+  checksum: 0f4da2f15e6f1245e49db15801dbee52f2bbfb267e1c39225afdab5afee1a72839cd86000e65ee9d7e4dfaff12239d28beaf5ee431357fcced15fb08583d72ca
   languageName: node
   linkType: hard
 
-"valibot@npm:^0.12.0":
-  version: 0.12.0
-  resolution: "valibot@npm:0.12.0"
-  checksum: 1ec982de04dd352783d50061c26cfdf9a9c95762a0c85f6318871c08cdd0290d3cf1f0f5950f5870fa60d3d5d9fcb960b9a15882f1f1f80cfa1b3b5b9c896edb
+"valibot@npm:^0.13.1":
+  version: 0.13.1
+  resolution: "valibot@npm:0.13.1"
+  checksum: f7c8a1b6dbd2b0cd1a200bfa6d85e5ce0bae3a723e1a691ac89fead3579af5561762a37563b27d9cf22c281b99890dea7cebab47ea579d4d9e1ba47e63b56e32
   languageName: node
   linkType: hard
 
