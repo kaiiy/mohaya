@@ -5,6 +5,7 @@ import { exit } from "process";
 import { safeParse, string } from "valibot";
 
 const VERSION = "0.0.4";
+const MODEL = "gpt-3.5-turbo";
 
 const apiKeySchema = string();
 const apiKeyResult = safeParse(apiKeySchema, process.env.OPENAI_API_KEY);
@@ -16,6 +17,25 @@ if (!apiKeyResult.success) {
 
 const openai = new OpenAI({ apiKey: apiKeyResult.data });
 
+const createCompletionConfig = (
+  inputText: string,
+): OpenAI.Chat.Completions.CompletionCreateParamsStreaming => ({
+  model: MODEL,
+  messages: [{
+    role: "system",
+    content:
+      "You are a programming and system administration assistant, Mohaya.",
+  }, {
+    role: "user",
+    content:
+      "Remember this: If the input message is in Japanese, translate it into English first. Then, reply in English only. Do not reply in Japanese. In addition, when using code blocks, always specify the programming language.",
+  }, {
+    role: "user",
+    content: inputText,
+  }],
+  stream: true,
+});
+
 const main = async () => {
   if (process.argv.length < 3) {
     console.log(`Mohaya: v${VERSION}`);
@@ -23,22 +43,11 @@ const main = async () => {
     process.exit(0);
   }
 
-  const stream = await openai.chat.completions.create({
-    model: "gpt-3.5-turbo",
-    messages: [{
-      role: "system",
-      content:
-        "You are a programming and system administration assistant, Mohaya.",
-    }, {
-      role: "user",
-      content:
-        "Remember this: If the input message is in Japanese, translate it into English first. Then, reply in English only. Do not reply in Japanese. When using code blocks, always specify the programming language.",
-    }, {
-      role: "user",
-      content: process.argv.slice(2).join(" "),
-    }],
-    stream: true,
-  });
+  const inputText = process.argv.slice(2).join(" ");
+
+  const completionConfig = createCompletionConfig(inputText);
+  const stream = await openai.chat.completions.create(completionConfig);
+
   for await (const part of stream) {
     const choices = part.choices;
     if (
@@ -46,9 +55,7 @@ const main = async () => {
       choices[0].finish_reason === null &&
       choices[0].delta.content
     ) {
-      {
-        process.stdout.write(choices[0].delta.content);
-      }
+      process.stdout.write(choices[0].delta.content);
     } else if (choices[0].finish_reason !== null) {
       console.log();
       break;
