@@ -4,7 +4,7 @@ import { OpenAI } from "openai";
 import { exit } from "process";
 import { safeParse, string } from "valibot";
 
-const VERSION = "0.0.5";
+const VERSION = "0.1.0";
 const MODEL = "gpt-3.5-turbo";
 
 const apiKeySchema = string();
@@ -15,7 +15,7 @@ if (!apiKeyResult.success) {
   exit(1);
 }
 
-const openai = new OpenAI({ apiKey: apiKeyResult.data });
+const openai = new OpenAI({ apiKey: apiKeyResult.output });
 
 const createCompletionConfig = (
   inputText: string,
