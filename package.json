@@ -6,7 +6,7 @@
     "build": "rm -rf dist && yarn ts ./bin/build.ts",
     "place": "yarn build && cp -f ./dist/mohaya $HOME/.local/bin/ && chmod u+x $HOME/.local/bin/mohaya"
   },
-  "packageManager": "yarn@3.6.1",
+  "packageManager": "yarn@4.0.1",
   "dependencies": {
     "openai": "^4.14.2",
     "valibot": "^0.20.0"
