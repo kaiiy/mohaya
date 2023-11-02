@@ -19,7 +19,7 @@ const openai = new OpenAI({ apiKey: apiKeyResult.output });
 
 const createCompletionConfig = (
   inputText: string,
-): OpenAI.Chat.Completions.CompletionCreateParamsStreaming => ({
+): OpenAI.Chat.Completions.ChatCompletionCreateParamsStreaming => ({
   model: MODEL,
   messages: [{
     role: "system",
