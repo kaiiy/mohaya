@@ -19,7 +19,7 @@ const openai = new OpenAI({ apiKey: apiKeyResult.output });
 
 const createCompletionConfig = (
   inputText: string,
-): OpenAI.Chat.Completions.CompletionCreateParamsStreaming => ({
+): OpenAI.Chat.Completions.ChatCompletionCreateParamsStreaming => ({
   model: MODEL,
   messages: [{
     role: "system",
@@ -36,15 +36,7 @@ const createCompletionConfig = (
   stream: true,
 });
 
-const main = async () => {
-  if (process.argv.length < 3) {
-    console.log(`Mohaya: v${VERSION}`);
-    console.log("Usage: `mohaya [some text]`");
-    process.exit(0);
-  }
-
-  const inputText = process.argv.slice(2).join(" ");
-
+const main = async (inputText: string) => {
   const completionConfig = createCompletionConfig(inputText);
   const stream = await openai.chat.completions.create(completionConfig);
 
@@ -63,4 +55,39 @@ const main = async () => {
   }
 };
 
-main();
+let pipeData: string = "";
+let inputData: string = "";
+
+if (process.argv.length >= 3) {
+  // Command line arguments were passed
+  inputData += process.argv.slice(2).join(" ");
+}
+
+// Check if there is pipe input
+if (!process.stdin.isTTY) {
+  process.stdin.setEncoding('utf8'); // Set the encoding
+
+  const end = new Promise((resolve, reject) => {
+    process.stdin.on('readable', () => {
+      let chunk;
+      // Use a loop to make sure we read all the available data.
+      while ((chunk = process.stdin.read()) !== null) {
+        pipeData += chunk;
+      }
+    });
+
+    process.stdin.on('end', () => {
+      // All data has been received
+      resolve(pipeData); // Resolve the data
+    });
+  });
+
+  end.then((pipeData) => {
+    // Combine input data and pipe data
+    const combinedData = inputData + '\n\n========' + pipeData;
+    main(combinedData); // Execute main after the promise is resolved
+  });
+} else {
+  main(inputData);
+}
+
