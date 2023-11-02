@@ -1,6 +1,6 @@
 {
   "name": "mohaya",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "scripts": {
     "ts": "node -r esbuild-register",
     "build": "rm -rf dist && yarn ts ./bin/build.ts",
