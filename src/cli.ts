@@ -1,7 +1,7 @@
 import { OpenAI } from "npm:openai@4.20.1";
 import { safeParse, string } from "npm:valibot@0.23.0";
 
-const VERSION = "0.2.0";
+const VERSION = "0.2.1";
 const MODEL = "gpt-3.5-turbo";
 
 const apiKeySchema = string();
