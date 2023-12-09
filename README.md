@@ -2,8 +2,7 @@
 
 ## Requirements
 
-- Node.js
-- Yarn
+- Deno
 
 ## Usage
 
@@ -15,6 +14,5 @@ $ mohaya what is your name
 ## Installation
 
 ```sh
-$ set -Ux OPENAI_API_KEY [your api key]
-$ curl -sSL https://github.com/kaiiy/mohaya/releases/latest/download/get.sh | bash
+$ deno install --allow-env --allow-net -n mohaya https://raw.githubusercontent.com/kaiiy/mohaya/main/src/index.ts
 ```
