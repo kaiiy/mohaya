@@ -14,5 +14,5 @@ $ mohaya what is your name
 ## Installation
 
 ```sh
-$ deno install --allow-env --allow-net -n mohaya https://raw.githubusercontent.com/kaiiy/mohaya/main/src/index.ts
+$ deno install --allow-env --allow-net -n mohaya https://raw.githubusercontent.com/kaiiy/mohaya/main/src/cli.ts
 ```
