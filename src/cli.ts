@@ -36,7 +36,7 @@ const createCompletionConfig = (
 const main = async () => {
   if (Deno.args.length === 0) {
     console.log(`Mohaya: v${VERSION}`);
-    console.log("Usage: `mohaya [some text]`");
+    console.log("Usage: `mohaya <text>`");
     Deno.exit(0);
   }
 
