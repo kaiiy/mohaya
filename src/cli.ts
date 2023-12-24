@@ -1,18 +1,18 @@
-import { OpenAI } from "npm:openai@4.20.1";
-import { safeParse, string } from "npm:valibot@0.23.0";
+import { OpenAI } from "https://deno.land/x/openai@v4.24.1/mod.ts";
+import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
-const VERSION = "0.2.1";
+const VERSION = "0.2.2";
 const MODEL = "gpt-3.5-turbo";
 
-const apiKeySchema = string();
-const apiKeyResult = safeParse(apiKeySchema, Deno.env.get("OPENAI_API_KEY"));
+const apiKeySchema = z.string();
+const apiKeyResult = apiKeySchema.safeParse(Deno.env.get("OPENAI_API_KEY"));
 
 if (!apiKeyResult.success) {
   console.error("Error: OPENAI_API_KEY is not set.");
   Deno.exit(1);
 }
 
-const openai = new OpenAI({ apiKey: apiKeyResult.output });
+const openai = new OpenAI({ apiKey: apiKeyResult.data });
 
 const createCompletionConfig = (
   inputText: string,

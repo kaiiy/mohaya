@@ -1,1 +1,5 @@
-{}
+{
+    "tasks": {
+        "cli": "deno run --allow-env --allow-net ./src/cli.ts"
+    }
+}
