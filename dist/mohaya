@@ -1,0 +1,3 @@
+#!/bin/sh
+
+exec deno run --allow-net --allow-env --no-config 'https://raw.githubusercontent.com/kaiiy/mohaya/v0.2.3/src/cli.ts' "$@"

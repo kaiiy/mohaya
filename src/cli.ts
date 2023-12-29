@@ -1,7 +1,7 @@
 import { OpenAI } from "https://deno.land/x/openai@v4.24.1/mod.ts";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
-const VERSION = "0.2.2";
+const VERSION = "0.2.3";
 const MODEL = "gpt-3.5-turbo";
 
 const apiKeySchema = z.string();
