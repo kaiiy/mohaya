@@ -62,4 +62,6 @@ const main = async () => {
   }
 };
 
-main();
+if (import.meta.main) {
+  main();
+}
