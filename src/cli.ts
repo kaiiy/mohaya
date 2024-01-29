@@ -1,6 +1,6 @@
-import { OpenAI } from "https://deno.land/x/openai@v4.24.7/mod.ts";
+import { OpenAI } from "https://deno.land/x/openai@v4.26.0/mod.ts";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
-import { parseArgs } from "https://deno.land/std@0.212.0/cli/parse_args.ts";
+import { parseArgs } from "https://deno.land/std@0.213.0/cli/parse_args.ts";
 
 const VERSION = "0.3.1";
 
@@ -14,7 +14,7 @@ const flags = parseArgs(Deno.args, {
 
 const MODEL_LIST = {
   gpt3: "gpt-3.5-turbo",
-  gpt4: "gpt-4-1106-preview",
+  gpt4: "gpt-4-turbo-preview",
 };
 const DEFAULT_MODEL = MODEL_LIST.gpt3;
 const model = flags["3"]
