@@ -2,7 +2,7 @@ import { OpenAI } from "https://deno.land/x/openai@v4.24.7/mod.ts";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 import { parseArgs } from "https://deno.land/std@0.212.0/cli/parse_args.ts";
 
-const VERSION = "0.3.0";
+const VERSION = "0.3.1";
 
 const flags = parseArgs(Deno.args, {
   alias: {
@@ -88,6 +88,8 @@ const main = async () => {
     console.log("Options:");
     console.log("  -h, --help     Show help");
     console.log("  -v, --version  Show version number");
+    console.log("  -3             Operate with GPT-3 (default)");
+    console.log("  -4             Operate with GPT-4");
     Deno.exit(0);
   }
 
