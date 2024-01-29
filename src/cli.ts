@@ -2,7 +2,7 @@ import { OpenAI } from "https://deno.land/x/openai@v4.26.0/mod.ts";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 import { parseArgs } from "https://deno.land/std@0.213.0/cli/parse_args.ts";
 
-const VERSION = "0.3.1";
+const VERSION = "0.3.1_1";
 
 const flags = parseArgs(Deno.args, {
   alias: {
