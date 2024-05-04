@@ -1,16 +1,45 @@
-on: 
-    push:
-      tags:
-        - "v*.*.*"
-permissions:
-    contents: write
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
 
 jobs:
-    deploy:
-        runs-on: ubuntu-22.04
-        timeout-minutes: 5
-        steps:
-        - uses: actions/checkout@v3
-    
-        - uses: softprops/action-gh-release@v1
-          if: startsWith(github.ref, 'refs/tags/')
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Release
+        uses: softprops/action-gh-release@v2
+
+  update-homebrew:
+    needs: [release]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: version
+        run: |
+          VERSION=$(echo $GITHUB_REF | sed -e 's/refs\/tags\///')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - id: url
+        run: |
+          URL="https://github.com/kaiiy/mohaya/archive/refs/tags/${{ steps.version.outputs.version }}.tar.gz"
+          echo "url=$URL" >> $GITHUB_OUTPUT
+
+      - id: checksum
+        run: |
+          SHA256=$(curl -sfL "${{ steps.url.outputs.url }}" | sha256sum | awk '{print $1}')
+          echo "sha256=$SHA256" >> $GITHUB_OUTPUT
+
+      - uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.PAT }}
+          repository: kaiiy/homebrew-tap
+          event-type: update-brew
+          client-payload: '{ "formula": "mohaya", "url": "${{ steps.url.outputs.url }}", "sha256": "${{ steps.checksum.outputs.sha256 }}" }'
