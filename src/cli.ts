@@ -1,8 +1,8 @@
-import { OpenAI } from "https://deno.land/x/openai@v4.26.0/mod.ts";
-import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
-import { parseArgs } from "https://deno.land/std@0.213.0/cli/parse_args.ts";
+import { OpenAI } from "https://deno.land/x/openai@v4.40.2/mod.ts";
+import { z } from "https://deno.land/x/zod@v3.23.6/mod.ts";
+import { parseArgs } from "https://deno.land/std@0.224.0/cli/parse_args.ts";
 
-const VERSION = "0.3.1_1";
+const VERSION = "1.0.0";
 
 const flags = parseArgs(Deno.args, {
   alias: {
@@ -14,7 +14,7 @@ const flags = parseArgs(Deno.args, {
 
 const MODEL_LIST = {
   gpt3: "gpt-3.5-turbo",
-  gpt4: "gpt-4-turbo-preview",
+  gpt4: "gpt-4-turbo",
 };
 const DEFAULT_MODEL = MODEL_LIST.gpt3;
 const model = flags["3"]
@@ -42,7 +42,7 @@ const createCompletionConfig = (
     content:
       "You are a programming and system administration assistant, Mohaya. You can help me with programming in English.",
   }, {
-    role: "user",
+    role: "system",
     content:
       "Remember this: If the input message is in Japanese, translate it into English first. Then, reply in English only. Do not reply in Japanese. In addition, when using code blocks, always specify the programming language.",
   }, {
@@ -83,13 +83,14 @@ const main = async () => {
   }
   // help command
   if (flags.help || Deno.args.length === 0) {
-    console.log("Usage: mohaya <text>");
-    console.log("");
-    console.log("Options:");
-    console.log("  -h, --help     Show help");
-    console.log("  -v, --version  Show version number");
-    console.log("  -3             Operate with GPT-3 (default)");
-    console.log("  -4             Operate with GPT-4");
+    console.log(`Usage: mohaya <text>
+
+    Options:
+      -h, --help     Show help
+      -v, --version  Show version number
+      -3             Operate with GPT-3 (default)
+      -4             Operate with GPT-4`);
+
     Deno.exit(0);
   }
 
