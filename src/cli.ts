@@ -8,6 +8,7 @@ const flags = parseArgs(Deno.args, {
   alias: {
     h: "help",
     v: "version",
+    V: "version",
   },
   boolean: ["help", "version", "3", "4"],
 });
