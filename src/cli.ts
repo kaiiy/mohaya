@@ -1,8 +1,8 @@
-import { OpenAI } from "https://deno.land/x/openai@v4.40.2/mod.ts";
-import { z } from "https://deno.land/x/zod@v3.23.6/mod.ts";
+import { OpenAI } from "https://deno.land/x/openai@v4.46.1/mod.ts";
+import { z } from "https://deno.land/x/zod@v3.23.8/mod.ts";
 import { parseArgs } from "https://deno.land/std@0.224.0/cli/parse_args.ts";
 
-const VERSION = "1.0.0";
+const VERSION = "1.1.0";
 
 const flags = parseArgs(Deno.args, {
   alias: {
@@ -12,11 +12,16 @@ const flags = parseArgs(Deno.args, {
   boolean: ["help", "version", "3", "4"],
 });
 
-const MODEL_LIST = {
+interface ModelList {
+  gpt3: OpenAI.ChatModel;
+  gpt4: OpenAI.ChatModel;
+}
+const MODEL_LIST: ModelList = {
   gpt3: "gpt-3.5-turbo",
-  gpt4: "gpt-4-turbo",
+  gpt4: "gpt-4o",
 };
-const DEFAULT_MODEL = MODEL_LIST.gpt3;
+
+const DEFAULT_MODEL = MODEL_LIST.gpt4;
 const model = flags["3"]
   ? MODEL_LIST.gpt3
   : flags["4"]
