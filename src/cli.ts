@@ -94,8 +94,8 @@ const main = async () => {
     Options:
       -h, --help     Show help
       -v, --version  Show version number
-      -3             Operate with GPT-3 (default)
-      -4             Operate with GPT-4`);
+      -3             Operate with GPT-3
+      -4             Operate with GPT-4 (default) `);
 
     Deno.exit(0);
   }
