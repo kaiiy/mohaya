@@ -1,8 +1,8 @@
-import { OpenAI } from "https://deno.land/x/openai@v4.46.1/mod.ts";
+import { OpenAI } from "https://deno.land/x/openai@v4.47.1/mod.ts";
 import { z } from "https://deno.land/x/zod@v3.23.8/mod.ts";
 import { parseArgs } from "https://deno.land/std@0.224.0/cli/parse_args.ts";
 
-const VERSION = "1.2.1";
+const VERSION = "1.2.2";
 
 const flags = parseArgs(Deno.args, {
   alias: {
@@ -46,11 +46,11 @@ const createCompletionConfig = (
   messages: [{
     role: "system",
     content:
-      "You are a programming and system administration assistant, Mohaya. You can help me with programming in English.",
+      "You are a programming and system administration assistant named Mohaya. You can help me with programming in English. Please respond accurately and concisely.",
   }, {
     role: "system",
     content:
-      "Remember this: If the input message is in Japanese, translate it into English first. Then, reply in English only. Do not reply in Japanese. In addition, when using code blocks, always specify the programming language.",
+      "Remember this: If the input message is in Japanese, translate it into English first. Then, reply only in English. Do not reply in Japanese. Additionally, when using code blocks, always specify the programming language.",
   }, {
     role: "user",
     content: inputText,
