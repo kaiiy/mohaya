@@ -1,5 +1,7 @@
 # Mohaya
 
+[![Release](https://github.com/kaiiy/mohaya/actions/workflows/release.yml/badge.svg)](https://github.com/kaiiy/mohaya/actions/workflows/release.yml)
+
 ## Requirements
 
 - Homebrew
