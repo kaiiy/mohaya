@@ -16,11 +16,11 @@ $ mohaya what is your name
 $ mohaya -h
 Usage: mohaya <text>                                       
                                                            
-Options:                                                   
-  -h, --help     Show help                                 
-  -v, --version  Show version number                       
-  -3             Operate with GPT-3                        
-  -4             Operate with GPT-4 (default)
+Options:
+  -h, --help     Show help
+  -v, --version  Show version number
+  --mini             Operate with GPT-4o Mini
+  --4o             Operate with GPT-4o (default) 
 ```
 
 ## Installation

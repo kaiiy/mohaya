@@ -1,4 +1,4 @@
-import { OpenAI } from "https://deno.land/x/openai@v4.47.1/mod.ts";
+import { OpenAI } from "https://deno.land/x/openai@v4.52.7/mod.ts";
 import { z } from "https://deno.land/x/zod@v3.23.8/mod.ts";
 import { parseArgs } from "https://deno.land/std@0.224.0/cli/parse_args.ts";
 
@@ -10,21 +10,21 @@ const flags = parseArgs(Deno.args, {
     v: "version",
     V: "version",
   },
-  boolean: ["help", "version", "3", "4"],
+  boolean: ["help", "version", "mini", "4o"],
 });
 
 interface ModelList {
-  gpt3: OpenAI.ChatModel;
+  mini: OpenAI.ChatModel;
   gpt4: OpenAI.ChatModel;
 }
 const MODEL_LIST: ModelList = {
-  gpt3: "gpt-3.5-turbo",
+  mini: "gpt-4o-mini",
   gpt4: "gpt-4o",
 };
 
 const DEFAULT_MODEL = MODEL_LIST.gpt4;
-const model = flags["3"]
-  ? MODEL_LIST.gpt3
+const model = flags["mini"]
+  ? MODEL_LIST.mini
   : flags["4"]
   ? MODEL_LIST.gpt4
   : DEFAULT_MODEL;
@@ -94,8 +94,8 @@ const main = async () => {
 Options:
   -h, --help     Show help
   -v, --version  Show version number
-  -3             Operate with GPT-3
-  -4             Operate with GPT-4 (default) `);
+  --mini             Operate with GPT-4o Mini
+  --4o             Operate with GPT-4o (default) `);
 
     Deno.exit(0);
   }
