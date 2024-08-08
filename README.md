@@ -14,13 +14,14 @@ $ mohaya what is your name
 ```
 ```sh
 $ mohaya -h
-Usage: mohaya <text>                                       
-                                                           
 Options:
   -h, --help     Show help
   -v, --version  Show version number
+
   --mini             Operate with GPT-4o Mini
   --4o             Operate with GPT-4o (default) 
+  
+  -e, --english  Translate the input message into English.
 ```
 
 ## Installation
