@@ -1,4 +1,4 @@
-import { OpenAI } from "https://deno.land/x/openai@v4.52.7/mod.ts";
+import { OpenAI } from "https://deno.land/x/openai@v4.55.1/mod.ts";
 import { z } from "https://deno.land/x/zod@v3.23.8/mod.ts";
 import { parseArgs } from "https://deno.land/std@0.224.0/cli/parse_args.ts";
 
@@ -9,8 +9,9 @@ const flags = parseArgs(Deno.args, {
     h: "help",
     v: "version",
     V: "version",
+    e: "english",
   },
-  boolean: ["help", "version", "mini", "4o"],
+  boolean: ["help", "version", "mini", "4o", "english"],
 });
 
 interface ModelList {
@@ -29,6 +30,12 @@ const model = flags["mini"]
   ? MODEL_LIST.gpt4
   : DEFAULT_MODEL;
 
+const isTranslateMode = flags["english"] ? true : false;
+
+const prompt = isTranslateMode
+  ? "Translate the input message into English."
+  : "Remember this: If the input message is in Japanese, translate it into English first. Then, reply only in English. Do not reply in Japanese. Additionally, when using code blocks, always specify the programming language.";
+
 const apiKeySchema = z.string();
 const apiKeyResult = apiKeySchema.safeParse(Deno.env.get("OPENAI_API_KEY"));
 
@@ -46,20 +53,16 @@ const createCompletionConfig = (
   messages: [{
     role: "system",
     content:
-      "You are a programming and system administration assistant named Mohaya. You can help me with programming in English. Please respond accurately and concisely.",
-  }, {
-    role: "system",
-    content:
-      "Remember this: If the input message is in Japanese, translate it into English first. Then, reply only in English. Do not reply in Japanese. Additionally, when using code blocks, always specify the programming language.",
+      "You are a programming and system administration assistant named Mohaya. You can help me in English. Please respond accurately and concisely. Do not include any additional output other than the result.",
   }, {
     role: "user",
-    content: inputText,
+    content: prompt + "\n\n========\n\n" + inputText,
   }],
   stream: true,
 });
 
 const askCommand = async () => {
-  const inputText = Deno.args.join(" ");
+  const inputText = flags._.join(" ");
 
   const completionConfig = createCompletionConfig(inputText);
   const stream = await openai.chat.completions.create(completionConfig);
