@@ -19,10 +19,7 @@ $ mohaya -h
 Options:
   -h, --help     Show help
   -v, --version  Show version number
-
-  --mini         Operate with GPT-4o Mini
-  --4o           Operate with GPT-4o (default) 
-  
+  -l, --lite     Operate with GPT-4o mini (default: GPT-4o)
   -e, --english  Translate the input message into English.
 ```
 

@@ -1,8 +1,8 @@
-import { OpenAI } from "https://deno.land/x/openai@v4.55.1/mod.ts";
+import { OpenAI } from "https://deno.land/x/openai@v4.55.7/mod.ts";
 import { z } from "https://deno.land/x/zod@v3.23.8/mod.ts";
 import { parseArgs } from "https://deno.land/std@0.224.0/cli/parse_args.ts";
 
-const VERSION = "1.5.0";
+const VERSION = "1.5.1";
 
 const flags = parseArgs(Deno.args, {
   alias: {
@@ -93,7 +93,7 @@ const main = async () => {
 Options:
   -h, --help     Show help
   -v, --version  Show version number
-  -l, --lite     Operate with GPT-4o Mini (default: GPT-4o)
+  -l, --lite     Operate with GPT-4o mini (default: GPT-4o)
   -e, --english  Translate the input message into English.`);
 
     Deno.exit(0);
