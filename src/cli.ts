@@ -2,33 +2,29 @@ import { OpenAI } from "https://deno.land/x/openai@v4.55.1/mod.ts";
 import { z } from "https://deno.land/x/zod@v3.23.8/mod.ts";
 import { parseArgs } from "https://deno.land/std@0.224.0/cli/parse_args.ts";
 
-const VERSION = "1.4.1";
+const VERSION = "1.5.0";
 
 const flags = parseArgs(Deno.args, {
   alias: {
     h: "help",
     v: "version",
     V: "version",
+    l: "lite",
     e: "english",
   },
-  boolean: ["help", "version", "mini", "4o", "english"],
+  boolean: ["help", "version", "lite", "english"],
 });
 
 interface ModelList {
-  mini: OpenAI.ChatModel;
-  gpt4: OpenAI.ChatModel;
+  lite: OpenAI.ChatModel;
+  normal: OpenAI.ChatModel;
 }
 const MODEL_LIST: ModelList = {
-  mini: "gpt-4o-mini",
-  gpt4: "gpt-4o",
+  lite: "gpt-4o-mini",
+  normal: "gpt-4o",
 };
 
-const DEFAULT_MODEL = MODEL_LIST.gpt4;
-const model = flags["mini"]
-  ? MODEL_LIST.mini
-  : flags["4"]
-  ? MODEL_LIST.gpt4
-  : DEFAULT_MODEL;
+const model = flags["lite"] ? MODEL_LIST.lite : MODEL_LIST.normal;
 
 const isTranslateMode = flags["english"] ? true : false;
 
@@ -97,10 +93,7 @@ const main = async () => {
 Options:
   -h, --help     Show help
   -v, --version  Show version number
-
-  --mini             Operate with GPT-4o Mini
-  --4o             Operate with GPT-4o (default) 
-  
+  -l, --lite     Operate with GPT-4o Mini (default: GPT-4o)
   -e, --english  Translate the input message into English.`);
 
     Deno.exit(0);
