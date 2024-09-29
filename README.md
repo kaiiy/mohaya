@@ -28,3 +28,21 @@ Options:
 ```sh
 $ brew install kaiiy/tap/mohaya
 ```
+
+## Development
+
+## Versioning
+
+Change the version in the following files:
+
+- `./dist/mohaya`
+  ```sh
+  #!/bin/sh
+
+  exec deno run --allow-net --allow-env --no-config 'https://raw.githubusercontent.com/kaiiy/mohaya/refs/tags/{version}/src/cli.ts' "$@"
+  ```
+
+- `./src/cli.ts`
+  ```ts
+  const VERSION = "{version}";
+  ```
