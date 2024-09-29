@@ -26,12 +26,12 @@ Options:
 ## Installation
 
 ```sh
-$ brew install kaiiy/tap/mohaya
+brew install kaiiy/tap/mohaya
 ```
 
 ## Development
 
-## Versioning
+### Versioning
 
 Change the version in the following files:
 
@@ -46,3 +46,7 @@ Change the version in the following files:
   ```ts
   const VERSION = "{version}";
   ```
+
+## License
+
+MIT
