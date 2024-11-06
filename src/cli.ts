@@ -2,7 +2,7 @@ import { OpenAI } from "https://deno.land/x/openai@v4.68.2/mod.ts";
 import { z } from "https://deno.land/x/zod@v3.23.8/mod.ts";
 import { parseArgs } from "https://deno.land/std@0.224.0/cli/parse_args.ts";
 
-const VERSION = "1.5.4";
+const VERSION = "1.5.5";
 
 const flags = parseArgs(Deno.args, {
   alias: {
@@ -88,13 +88,16 @@ const main = async () => {
   }
   // help command
   if (flags.help || Deno.args.length === 0) {
-    console.log(`Usage: mohaya <text>
+    console.log(`Usage: mohaya [TEXT]
+
+Arguments:
+  [TEXT]         The text to ask Mohaya
 
 Options:
   -h, --help     Show help
   -v, --version  Show version number
   -l, --lite     Operate with GPT-4o mini (default: GPT-4o)
-  -e, --english  Translate the input message into English.`);
+  -e, --english  Translate the input message into English`);
 
     Deno.exit(0);
   }
