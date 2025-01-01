@@ -20,7 +20,8 @@ Options:
   -h, --help     Show help
   -v, --version  Show version number
   -l, --lite     Operate with GPT-4o mini (default: GPT-4o)
-  -e, --english  Translate the input message into English.
+  -e, --english  Translate the input message into English
+  -r, --revise   Revise the input message in English
 ```
 
 ## Installation
