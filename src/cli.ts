@@ -2,7 +2,7 @@ import { OpenAI } from "https://deno.land/x/openai@v4.68.2/mod.ts";
 import { z } from "https://deno.land/x/zod@v3.23.8/mod.ts";
 import { parseArgs } from "https://deno.land/std@0.224.0/cli/parse_args.ts";
 
-const VERSION = "1.5.5";
+const VERSION = "1.6.0";
 
 const flags = parseArgs(Deno.args, {
   alias: {
@@ -11,8 +11,9 @@ const flags = parseArgs(Deno.args, {
     V: "version",
     l: "lite",
     e: "english",
+    r: "revise",
   },
-  boolean: ["help", "version", "lite", "english"],
+  boolean: ["help", "version", "lite", "english", "revise"],
 });
 
 interface ModelList {
@@ -27,10 +28,16 @@ const MODEL_LIST: ModelList = {
 const model = flags["lite"] ? MODEL_LIST.lite : MODEL_LIST.normal;
 
 const isTranslateMode = flags["english"] ? true : false;
+const isReviseMode = flags["revise"] ? true : false;
 
-const prompt = isTranslateMode
-  ? "Translate the input message into English."
-  : "Remember this: If the input message is in Japanese, translate it into English first. Then, reply only in English. Do not reply in Japanese. Additionally, when using code blocks, always specify the programming language.";
+const prompt = () => {
+  if (isTranslateMode) {
+    return "Translate the input message into English.";
+  } else if (isReviseMode) {
+    return "Revise the provided input text in English. If no revision is needed, state that explicitly. Output only the revised version or the message indicating no revision is necessary.";
+  }
+  return "Remember this: If the input message is in Japanese, translate it into English first. Then, reply only in English. Do not reply in Japanese. Additionally, when using code blocks, always specify the programming language.";
+};
 
 const apiKeySchema = z.string();
 const apiKeyResult = apiKeySchema.safeParse(Deno.env.get("OPENAI_API_KEY"));
@@ -52,7 +59,7 @@ const createCompletionConfig = (
       "You are a programming and system administration assistant named Mohaya. You can help me in English. Please respond accurately and concisely. Do not include any additional output other than the result.",
   }, {
     role: "user",
-    content: prompt + "\n\n========\n\n" + inputText,
+    content: prompt() + "\n\n========\n\n" + inputText,
   }],
   stream: true,
 });
@@ -97,7 +104,8 @@ Options:
   -h, --help     Show help
   -v, --version  Show version number
   -l, --lite     Operate with GPT-4o mini (default: GPT-4o)
-  -e, --english  Translate the input message into English`);
+  -e, --english  Translate the input message into English
+  -r, --revise   Revise the input message in English`);
 
     Deno.exit(0);
   }
