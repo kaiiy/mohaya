@@ -1,8 +1,8 @@
-import OpenAI from "jsr:@openai/openai";
+import OpenAI from "jsr:@openai/openai@^4.86.2";
 import { z } from "https://deno.land/x/zod@v3.23.8/mod.ts";
 import { parseArgs } from "https://deno.land/std@0.224.0/cli/parse_args.ts";
 
-const VERSION = "1.7.0";
+const VERSION = "1.7.1";
 
 const flags = parseArgs(Deno.args, {
   alias: {
@@ -27,10 +27,10 @@ const MODEL_LIST: ModelList = {
 
 const model = flags["lite"] ? MODEL_LIST.lite : MODEL_LIST.normal;
 
-const isTranslateMode = flags["english"] ? true : false;
-const isReviseMode = flags["revise"] ? true : false;
+const isTranslateMode = flags["english"];
+const isReviseMode = flags["revise"];
 
-const prompt = () => {
+const generateUserPrompt = () => {
   if (isTranslateMode) {
     return "Translate the input message into English.";
   } else if (isReviseMode) {
@@ -54,32 +54,24 @@ const createCompletionConfig = (
 ): OpenAI.Chat.Completions.ChatCompletionCreateParamsStreaming => {
   const content =
     "You are a programming and system administration assistant named Mohaya. You can help me in English. Please respond accurately and concisely. Do not include any additional output other than the result.";
-  if (model == "o3-mini") {
-    return {
-      model,
-      messages: [{
-        role: "system",
-        content,
-      }, {
+
+  const config: OpenAI.Chat.Completions.ChatCompletionCreateParamsStreaming = {
+    model,
+    messages: [
+      { role: "system", content },
+      {
         role: "user",
-        content: prompt() + "\n\n========\n\n" + inputText,
-      }],
-      stream: true,
-      reasoning_effort: "high",
-    };
-  } else {
-    return {
-      model,
-      messages: [{
-        role: "system",
-        content,
-      }, {
-        role: "user",
-        content: prompt() + "\n\n========\n\n" + inputText,
-      }],
-      stream: true,
-    };
+        content: `${generateUserPrompt()}\n\n========\n\n${inputText}`,
+      },
+    ],
+    stream: true,
+  };
+
+  if (model === "o3-mini") {
+    config.reasoning_effort = "high";
   }
+
+  return config;
 };
 
 const askCommand = async () => {
@@ -88,6 +80,8 @@ const askCommand = async () => {
   const completionConfig = createCompletionConfig(inputText);
   const stream = await openai.chat.completions.create(completionConfig);
 
+  const encoder = new TextEncoder();
+
   for await (const part of stream) {
     const choices = part.choices;
     if (
@@ -95,10 +89,10 @@ const askCommand = async () => {
       choices[0].finish_reason === null &&
       choices[0].delta.content
     ) {
-      const content = new TextEncoder().encode(choices[0].delta.content);
+      const content = encoder.encode(choices[0].delta.content);
       Deno.stdout.write(content);
     } else if (choices[0].finish_reason !== null) {
-      const newLine = new TextEncoder().encode("\n");
+      const newLine = encoder.encode("\n");
       Deno.stdout.write(newLine);
       break;
     }
