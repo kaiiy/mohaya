@@ -1,8 +1,8 @@
-import { OpenAI } from "https://deno.land/x/openai@v4.68.2/mod.ts";
+import OpenAI from "jsr:@openai/openai";
 import { z } from "https://deno.land/x/zod@v3.23.8/mod.ts";
 import { parseArgs } from "https://deno.land/std@0.224.0/cli/parse_args.ts";
 
-const VERSION = "1.6.0";
+const VERSION = "1.7.0";
 
 const flags = parseArgs(Deno.args, {
   alias: {
@@ -21,8 +21,8 @@ interface ModelList {
   normal: OpenAI.ChatModel;
 }
 const MODEL_LIST: ModelList = {
-  lite: "gpt-4o-mini",
-  normal: "gpt-4o",
+  lite: "gpt-4o",
+  normal: "o3-mini",
 };
 
 const model = flags["lite"] ? MODEL_LIST.lite : MODEL_LIST.normal;
@@ -51,18 +51,36 @@ const openai = new OpenAI({ apiKey: apiKeyResult.data });
 
 const createCompletionConfig = (
   inputText: string,
-): OpenAI.Chat.Completions.ChatCompletionCreateParamsStreaming => ({
-  model,
-  messages: [{
-    role: "system",
-    content:
-      "You are a programming and system administration assistant named Mohaya. You can help me in English. Please respond accurately and concisely. Do not include any additional output other than the result.",
-  }, {
-    role: "user",
-    content: prompt() + "\n\n========\n\n" + inputText,
-  }],
-  stream: true,
-});
+): OpenAI.Chat.Completions.ChatCompletionCreateParamsStreaming => {
+  const content =
+    "You are a programming and system administration assistant named Mohaya. You can help me in English. Please respond accurately and concisely. Do not include any additional output other than the result.";
+  if (model == "o3-mini") {
+    return {
+      model,
+      messages: [{
+        role: "system",
+        content,
+      }, {
+        role: "user",
+        content: prompt() + "\n\n========\n\n" + inputText,
+      }],
+      stream: true,
+      reasoning_effort: "high",
+    };
+  } else {
+    return {
+      model,
+      messages: [{
+        role: "system",
+        content,
+      }, {
+        role: "user",
+        content: prompt() + "\n\n========\n\n" + inputText,
+      }],
+      stream: true,
+    };
+  }
+};
 
 const askCommand = async () => {
   const inputText = flags._.join(" ");
@@ -103,7 +121,7 @@ Arguments:
 Options:
   -h, --help     Show help
   -v, --version  Show version number
-  -l, --lite     Operate with GPT-4o mini (default: GPT-4o)
+  -l, --lite     Operate with gpt-4o (default: o3-mini-high)
   -e, --english  Translate the input message into English
   -r, --revise   Revise the input message in English`);
 

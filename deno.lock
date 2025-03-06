@@ -1,5 +1,13 @@
 {
   "version": "4",
+  "specifiers": {
+    "jsr:@openai/openai@*": "4.86.2"
+  },
+  "jsr": {
+    "@openai/openai@4.86.2": {
+      "integrity": "411b9a7b9ae259062154dd7d3f52bdda4a4932fad02e30248aac909587c72a8f"
+    }
+  },
   "remote": {
     "https://deno.land/std@0.224.0/assert/assert.ts": "09d30564c09de846855b7b071e62b5974b001bb72a4b797958fe0660e7849834",
     "https://deno.land/std@0.224.0/assert/assertion_error.ts": "ba8752bd27ebc51f723702fac2f54d3e94447598f54264a6653d6413738a8917",

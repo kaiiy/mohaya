@@ -12,14 +12,15 @@ A CLI wrapper for the OpenAI Chat API
 
 ```sh
 $ mohaya what is your name
-> My name is Mohaya. I am a programming and system administration assistant. How can I assist you today? 
+> My name is Mohaya. I am a programming and system administration assistant. How can I assist you today?
 ```
+
 ```sh
 $ mohaya -h
 Options:
   -h, --help     Show help
   -v, --version  Show version number
-  -l, --lite     Operate with GPT-4o mini (default: GPT-4o)
+  -l, --lite     Operate with gpt-4o (default: o3-mini-high)
   -e, --english  Translate the input message into English
   -r, --revise   Revise the input message in English
 ```
