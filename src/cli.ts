@@ -2,7 +2,7 @@ import OpenAI from "jsr:@openai/openai@^4.86.2";
 import { z } from "https://deno.land/x/zod@v3.23.8/mod.ts";
 import { parseArgs } from "https://deno.land/std@0.224.0/cli/parse_args.ts";
 
-const VERSION = "1.7.1";
+const VERSION = "1.7.2";
 
 const flags = parseArgs(Deno.args, {
   alias: {
@@ -31,7 +31,12 @@ const isTranslateMode = flags["english"];
 const isReviseMode = flags["revise"];
 
 const generateUserPrompt = () => {
-  if (isTranslateMode) {
+  if (isTranslateMode && isReviseMode) {
+    console.error(
+      "Error: Select one of the options: --english (-e) or --revise (-r).",
+    );
+    Deno.exit(1);
+  } else if (isTranslateMode) {
     return "Translate the input message into English.";
   } else if (isReviseMode) {
     return "Revise the provided input text in English. If no revision is needed, state that explicitly. Output only the revised version or the message indicating no revision is necessary.";
@@ -55,13 +60,14 @@ const createCompletionConfig = (
   const content =
     "You are a programming and system administration assistant named Mohaya. You can help me in English. Please respond accurately and concisely. Do not include any additional output other than the result.";
 
+  const userPrompt = generateUserPrompt();
   const config: OpenAI.Chat.Completions.ChatCompletionCreateParamsStreaming = {
     model,
     messages: [
       { role: "system", content },
       {
         role: "user",
-        content: `${generateUserPrompt()}\n\n========\n\n${inputText}`,
+        content: `${userPrompt}\n\n========\n\n${inputText}`,
       },
     ],
     stream: true,
