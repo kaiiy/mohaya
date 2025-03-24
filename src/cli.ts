@@ -1,8 +1,8 @@
 import OpenAI from "jsr:@openai/openai@^4.86.2";
-import { z } from "https://deno.land/x/zod@v3.23.8/mod.ts";
+import { z } from "https://deno.land/x/zod@v3.24.2/mod.ts";
 import { parseArgs } from "https://deno.land/std@0.224.0/cli/parse_args.ts";
 
-const VERSION = "1.7.2";
+const VERSION = "1.8.0";
 
 const flags = parseArgs(Deno.args, {
   alias: {
@@ -74,7 +74,7 @@ const createCompletionConfig = (
   };
 
   if (model === "o3-mini") {
-    config.reasoning_effort = "high";
+    config.reasoning_effort = "low";
   }
 
   return config;
@@ -113,17 +113,17 @@ const main = async () => {
   }
   // help command
   if (flags.help || Deno.args.length === 0) {
-    console.log(`Usage: mohaya [TEXT]
+    console.log(`Usage: mohaya [OPTIONS] [TEXT]
 
 Arguments:
-  [TEXT]         The text to ask Mohaya
+  [TEXT]             The text you want to ask Mohaya.
 
 Options:
-  -h, --help     Show help
-  -v, --version  Show version number
-  -l, --lite     Operate with gpt-4o (default: o3-mini-high)
-  -e, --english  Translate the input message into English
-  -r, --revise   Revise the input message in English`);
+  -h, --help         Display this help message.
+  -v, --version      Show the current version number.
+  -l, --lite         Run using GPT-4o (default: o3-mini-low mode).
+  -e, --english      Translate the input message into English.
+  -r, --revise       Revise the input message in English.`);
 
     Deno.exit(0);
   }
