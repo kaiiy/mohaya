@@ -30,12 +30,16 @@ const model = flags["lite"] ? MODEL_LIST.lite : MODEL_LIST.normal;
 const isTranslateMode = flags["english"];
 const isReviseMode = flags["revise"];
 
+const exitWithError = (message: string): never => {
+  console.error(`Error: ${message}`);
+  Deno.exit(1);
+};
+
 const generateUserPrompt = () => {
   if (isTranslateMode && isReviseMode) {
-    console.error(
-      "Error: Select one of the options: --english (-e) or --revise (-r).",
+    exitWithError(
+      "Select one of the options: --english (-e) or --revise (-r).",
     );
-    Deno.exit(1);
   } else if (isTranslateMode) {
     return "Translate the input message into English.";
   } else if (isReviseMode) {
@@ -48,8 +52,7 @@ const apiKeySchema = z.string();
 const apiKeyResult = apiKeySchema.safeParse(Deno.env.get("OPENAI_API_KEY"));
 
 if (!apiKeyResult.success) {
-  console.error("Error: OPENAI_API_KEY is not set.");
-  Deno.exit(1);
+  exitWithError("OPENAI_API_KEY is not set.");
 }
 
 const openai = new OpenAI({ apiKey: apiKeyResult.data });
@@ -80,40 +83,34 @@ const createCompletionConfig = (
   return config;
 };
 
-const askCommand = async () => {
+const executeChat = async () => {
   const inputText = flags._.join(" ");
 
   const completionConfig = createCompletionConfig(inputText);
-  const stream = await openai.chat.completions.create(completionConfig);
 
-  const encoder = new TextEncoder();
+  try {
+    const stream = await openai.chat.completions.create(completionConfig);
+    const encoder = new TextEncoder();
 
-  for await (const part of stream) {
-    const choices = part.choices;
-    if (
-      choices.length > 0 &&
-      choices[0].finish_reason === null &&
-      choices[0].delta.content
-    ) {
-      const content = encoder.encode(choices[0].delta.content);
-      Deno.stdout.write(content);
-    } else if (choices[0].finish_reason !== null) {
-      const newLine = encoder.encode("\n");
-      Deno.stdout.write(newLine);
-      break;
+    for await (const part of stream) {
+      const choices = part.choices;
+      if (choices.length > 0) {
+        if (choices[0].delta.content) {
+          Deno.stdout.write(encoder.encode(choices[0].delta.content));
+        }
+        if (choices[0].finish_reason !== null) {
+          Deno.stdout.write(encoder.encode("\n"));
+          break;
+        }
+      }
     }
+  } catch (error) {
+    exitWithError(`Failed to process chat stream: ${error}`);
   }
 };
 
-const main = async () => {
-  // version command
-  if (flags.version) {
-    console.log(VERSION);
-    Deno.exit(0);
-  }
-  // help command
-  if (flags.help || Deno.args.length === 0) {
-    console.log(`Usage: mohaya [OPTIONS] [TEXT]
+const displayHelp = (): void => {
+  console.log(`Usage: mohaya [OPTIONS] [TEXT]
 
 Arguments:
   [TEXT]             The text you want to ask Mohaya.
@@ -124,12 +121,21 @@ Options:
   -l, --lite         Run using GPT-4o (default: o3-mini-low mode).
   -e, --english      Translate the input message into English.
   -r, --revise       Revise the input message in English.`);
+};
 
+const main = async () => {
+  // version command
+  if (flags.version) {
+    console.log(VERSION);
+    Deno.exit(0);
+  }
+  // help command
+  if (flags.help || Deno.args.length === 0) {
+    displayHelp();
     Deno.exit(0);
   }
 
-  // ask command
-  await askCommand();
+  await executeChat();
 };
 
 if (import.meta.main) {
