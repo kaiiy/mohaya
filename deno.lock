@@ -2,11 +2,15 @@
   "version": "4",
   "specifiers": {
     "jsr:@openai/openai@*": "4.86.2",
-    "jsr:@openai/openai@^4.86.2": "4.86.2"
+    "jsr:@openai/openai@^4.86.2": "4.86.2",
+    "jsr:@openai/openai@^4.95.1": "4.95.1"
   },
   "jsr": {
     "@openai/openai@4.86.2": {
       "integrity": "411b9a7b9ae259062154dd7d3f52bdda4a4932fad02e30248aac909587c72a8f"
+    },
+    "@openai/openai@4.95.1": {
+      "integrity": "2f4e88862e5613b7c166051ff5ebcce49c871f78b6dc5c24fa388172e277b701"
     }
   },
   "remote": {

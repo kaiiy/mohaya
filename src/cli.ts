@@ -1,8 +1,8 @@
-import OpenAI from "jsr:@openai/openai@^4.86.2";
+import OpenAI from "jsr:@openai/openai@^4.95.1";
 import { z } from "https://deno.land/x/zod@v3.24.2/mod.ts";
 import { parseArgs } from "https://deno.land/std@0.224.0/cli/parse_args.ts";
 
-const VERSION = "1.8.1";
+const VERSION = "1.9.0";
 
 const flags = parseArgs(Deno.args, {
   alias: {
@@ -21,8 +21,8 @@ interface ModelList {
   normal: OpenAI.ChatModel;
 }
 const MODEL_LIST: ModelList = {
-  lite: "gpt-4o",
-  normal: "o3-mini",
+  lite: "gpt-4.1",
+  normal: "o4-mini",
 };
 
 const model = flags["lite"] ? MODEL_LIST.lite : MODEL_LIST.normal;
@@ -76,8 +76,8 @@ const createCompletionConfig = (
     stream: true,
   };
 
-  if (model === "o3-mini") {
-    config.reasoning_effort = "low";
+  if (model === MODEL_LIST.normal) {
+    config.reasoning_effort = "medium";
   }
 
   return config;
@@ -118,7 +118,7 @@ Arguments:
 Options:
   -h, --help         Display this help message.
   -v, --version      Show the current version number.
-  -l, --lite         Run using GPT-4o (default: o3-mini-low mode).
+  -l, --lite         Run using gpt-4.1 (default: o4-mini-medium).
   -e, --english      Translate the input message into English.
   -r, --revise       Revise the input message in English.`);
 };
