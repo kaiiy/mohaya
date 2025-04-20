@@ -17,12 +17,17 @@ $ mohaya what is your name
 
 ```sh
 $ mohaya -h
+Usage: mohaya [OPTIONS] [TEXT]
+
+Arguments:
+  [TEXT]             The text you want to ask Mohaya.
+
 Options:
-  -h, --help     Show help
-  -v, --version  Show version number
-  -l, --lite     Operate with gpt-4o (default: o3-mini-high)
-  -e, --english  Translate the input message into English
-  -r, --revise   Revise the input message in English
+  -h, --help         Display this help message.
+  -v, --version      Show the current version number.
+  -l, --lite         Run using gpt-4.1 (default: o4-mini-medium).
+  -e, --english      Translate the input message into English.
+  -r, --revise       Revise the input message in English.
 ```
 
 ## Installation
@@ -38,6 +43,7 @@ brew install kaiiy/tap/mohaya
 Change the version in the following files:
 
 - `./dist/mohaya`
+
   ```sh
   #!/bin/sh
 
