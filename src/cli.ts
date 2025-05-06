@@ -2,7 +2,7 @@ import OpenAI from "jsr:@openai/openai@^4.95.1";
 import { z } from "https://deno.land/x/zod@v3.24.2/mod.ts";
 import { parseArgs } from "https://deno.land/std@0.224.0/cli/parse_args.ts";
 
-const VERSION = "1.9.0";
+const VERSION = "1.9.1";
 
 const flags = parseArgs(Deno.args, {
   alias: {
@@ -96,10 +96,10 @@ const executeChat = async () => {
       const choices = part.choices;
       if (choices.length > 0) {
         if (choices[0].delta.content) {
-          Deno.stdout.write(encoder.encode(choices[0].delta.content));
+          await Deno.stdout.write(encoder.encode(choices[0].delta.content));
         }
         if (choices[0].finish_reason !== null) {
-          Deno.stdout.write(encoder.encode("\n"));
+          await Deno.stdout.write(encoder.encode("\n"));
           break;
         }
       }
