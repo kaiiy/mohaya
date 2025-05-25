@@ -2,7 +2,7 @@ import OpenAI from "jsr:@openai/openai@^4.95.1";
 import { z } from "https://deno.land/x/zod@v3.24.4/mod.ts";
 import { parseArgs } from "https://deno.land/std@0.224.0/cli/parse_args.ts";
 
-const VERSION = "1.9.2";
+const VERSION = "1.9.3";
 
 const flags = parseArgs(Deno.args, {
   alias: {
@@ -43,7 +43,7 @@ const generateUserPrompt = () => {
   } else if (isTranslateMode) {
     return "Translate the input message into English.";
   } else if (isReviseMode) {
-    return "Revise the provided input text in English. If no revision is needed, state that explicitly. Output only the revised version or the message indicating no revision is necessary.";
+    return "Please revise the given English text. Your output must be exactly one of these two formats:\n\nIf a revision is needed:\n- Reason for revision: [brief reason]\n- Revised version: [improved text]\n\nIf no revision is needed:\n- No revision needed.\n\nDo not include any other comments or explanations.";
   }
   return "Remember this: If the input message is in Japanese, translate it into English first. Then, reply only in English. Do not reply in Japanese. Additionally, when using code blocks, always specify the programming language.";
 };
