@@ -2,7 +2,8 @@ import OpenAI from "jsr:@openai/openai@^4.95.1";
 import { z } from "https://deno.land/x/zod@v3.24.4/mod.ts";
 import { parseArgs } from "https://deno.land/std@0.224.0/cli/parse_args.ts";
 
-const VERSION = "1.10.0";
+const VERSION = "1.10.1" as const;
+const MODEL: OpenAI.ChatModel = "o4-mini";
 
 const flags = parseArgs(Deno.args, {
   alias: {
@@ -15,8 +16,6 @@ const flags = parseArgs(Deno.args, {
   boolean: ["help", "version", "english", "revise"],
 });
 
-const MODEL: OpenAI.ChatModel = "o4-mini";
-
 const isTranslateMode = flags["english"];
 const isReviseMode = flags["revise"];
 
@@ -26,11 +25,7 @@ const exitWithError = (message: string): never => {
 };
 
 const generateUserPrompt = () => {
-  if (isTranslateMode && isReviseMode) {
-    exitWithError(
-      "Select one of the options: --english (-e) or --revise (-r).",
-    );
-  } else if (isTranslateMode) {
+  if (isTranslateMode) {
     return "Translate the input message into English.";
   } else if (isReviseMode) {
     return "Please revise the given English text. Your output must be exactly one of these two formats:\n\nIf a revision is needed:\n- Reason for revision: [brief reason]\n- Revised version: [improved text]\n\nIf no revision is needed:\n- No revision needed.\n\nDo not include any other comments or explanations.";
@@ -47,48 +42,33 @@ if (!apiKeyResult.success) {
 
 const openai = new OpenAI({ apiKey: apiKeyResult.data });
 
-const createCompletionConfig = (
-  inputText: string,
-): OpenAI.Chat.Completions.ChatCompletionCreateParamsStreaming => {
-  const content =
+const executeChat = async (inputText: string) => {
+  const instructions =
     "You are a programming and system administration assistant named Mohaya. You can help me in English. Please respond accurately and concisely. Do not include any additional output other than the result.";
-
   const userPrompt = generateUserPrompt();
-  const config: OpenAI.Chat.Completions.ChatCompletionCreateParamsStreaming = {
-    model: MODEL,
-    messages: [
-      { role: "system", content },
-      {
-        role: "user",
-        content: `${userPrompt}\n\n========\n\n${inputText}`,
-      },
-    ],
-    stream: true,
-    reasoning_effort: "medium",
-  };
-
-  return config;
-};
-
-const executeChat = async () => {
-  const inputText = flags._.join(" ");
-
-  const completionConfig = createCompletionConfig(inputText);
 
   try {
-    const stream = await openai.chat.completions.create(completionConfig);
+    const stream = await openai.responses.create(
+      {
+        model: MODEL,
+        instructions: instructions,
+        input: `${userPrompt}\n\n========\n\n${inputText}`,
+        stream: true,
+        reasoning: {
+          effort: "medium", // for a reasoning model (e.g., o4-mini)
+        },
+      },
+    );
     const encoder = new TextEncoder();
 
     for await (const part of stream) {
-      const choices = part.choices;
-      if (choices.length > 0) {
-        if (choices[0].delta.content) {
-          await Deno.stdout.write(encoder.encode(choices[0].delta.content));
-        }
-        if (choices[0].finish_reason !== null) {
-          await Deno.stdout.write(encoder.encode("\n"));
-          break;
-        }
+      const type = part.type;
+      if (type === "response.output_text.delta") {
+        const delta = part.delta;
+        await Deno.stdout.write(encoder.encode(delta));
+      } else if (type === "response.completed") {
+        await Deno.stdout.write(encoder.encode("\n"));
+        break;
       }
     }
   } catch (error) {
@@ -109,19 +89,26 @@ Options:
   -r, --revise       Revise the input message in English.`);
 };
 
+const isSingleFlag = (): boolean =>
+  [flags.help, flags.version, flags.english, flags.revise].filter(Boolean)
+    .length <= 1;
+
 const main = async () => {
-  // version command
+  if (!isSingleFlag()) {
+    exitWithError("You can only use one of the options.");
+  }
+
   if (flags.version) {
     console.log(VERSION);
     Deno.exit(0);
   }
-  // help command
   if (flags.help || Deno.args.length === 0) {
     displayHelp();
     Deno.exit(0);
   }
 
-  await executeChat();
+  const inputText = flags._.join(" ");
+  await executeChat(inputText);
 };
 
 if (import.meta.main) {
