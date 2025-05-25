@@ -21,7 +21,6 @@ Arguments:
 Options:
   -h, --help         Display this help message.
   -v, --version      Show the current version number.
-  -l, --lite         Run using gpt-4.1 (default: o4-mini-medium).
   -e, --english      Translate the input message into English.
   -r, --revise       Revise the input message in English.
 ```
