@@ -1,11 +1,11 @@
 {
   "version": "5",
   "specifiers": {
-    "jsr:@openai/openai@^4.95.1": "4.95.1"
+    "jsr:@openai/openai@^4.95.1": "4.102.0"
   },
   "jsr": {
-    "@openai/openai@4.95.1": {
-      "integrity": "2f4e88862e5613b7c166051ff5ebcce49c871f78b6dc5c24fa388172e277b701"
+    "@openai/openai@4.102.0": {
+      "integrity": "ea5201bc5c8a696d3a5139a9cd2252e3ab9b2b880769a9cd7f05602ea1a02acf"
     }
   },
   "remote": {
